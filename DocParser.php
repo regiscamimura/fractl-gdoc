@@ -167,7 +167,12 @@ class DocParser
 				$this->list[$gdocElement->bullet->listId][$level] = $this->html->createElement('ul');
 				$root->appendChild($this->list[$gdocElement->bullet->listId][$level]);
 			}
-			if (isset($this->list[$gdocElement->bullet->listId][$level - 1])) $this->list[$gdocElement->bullet->listId][$level - 1]->appendChild($this->list[$gdocElement->bullet->listId][$level]);
+			
+			if (!isset($this->list[$gdocElement->bullet->listId][$level - 1])) {
+				$this->list[$gdocElement->bullet->listId][$level - 1] = $this->html->createElement('ul');
+				$root->appendChild($this->list[$gdocElement->bullet->listId][$level - 1]);
+			}
+			$this->list[$gdocElement->bullet->listId][$level - 1]->appendChild($this->list[$gdocElement->bullet->listId][$level]);
 			
 
 			$paragraphElement  = $this->html->createElement('li');
